@@ -196,9 +196,6 @@ var NoteTracker = {
   clearForm: function () {
     $('#displayWindow').empty();
   },
-  clearNoteWrapper: function (){
-    document.getElementById('noteWrapper').innerHTML = '';
-  },
   tagsDropDown: function() {
       userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
       var menu = '<form id="tagForm">Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option class="tagColor" value="none">None</option>';
