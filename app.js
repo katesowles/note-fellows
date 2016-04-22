@@ -1,14 +1,18 @@
 var userLibrary = [];
 var tempNoteId;
 // this control flow allows us to avoid errors when switching between html pages
-if (document.title === "Welcome to Note Fellows!") {//index.html
+
+// if a user visits the site on index.html and userIndex and userLibrary both exist in local storage, parse the info and save it to the UserLibrary variable
+if (document.title === "Welcome to Note Fellows!") { //index.html
   if (localStorage.userIndex  && localStorage.userLibrary) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
   }
-  newUserForm();
+  newUserForm(); // why accessing NEW user form if there's already data? shouldn't it be RETURNING user?
 }
-else if (document.title === "Note Fellows") {// notes.html
+
+// if user visits site on notes.html and userIndex exists, parse it and userLibrary and listen for click on 'noteList' element and run getNote when clicked.
+else if (document.title === "Note Fellows") { // notes.html
   if (localStorage.userIndex) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
@@ -31,11 +35,17 @@ function Note (noteTitle, noteContent) {
   this.noteIndex = 0;
 }
 /******************GLOBAL FUNCTIONS***************/
+
+//populates the new user form via innerHTML
 function newUserForm (event) {
   document.getElementById('loginForm').innerHTML = '';
   document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
+
+  // event listener looking for click on newUser button
   var newUserEl = document.getElementById('newUser');
   newUserEl.addEventListener('submit', function(e) {newUser(e);},false);
+
+  // or existing user button; use better naming scheme!
   var existingButton = document.getElementById('existingButton');
   existingButton.addEventListener('click', function(e) {returnUserForm(e);},false);
 }
@@ -55,13 +65,13 @@ function newUser(event) {
   var library = [];
   var tags = [];
   var userExists = false;
-  for (var i = 0; i < userLibrary.length; i++) {
+  for (var i = 0; i < userLibrary.length; i++) { // checks to see if user exists in that computer's local storage
     if (userLibrary[i].username === username) {
       msg.textContent = "Username taken";
       userExists = true;
     }
   }
-  if (!userExists) {
+  if (!userExists) { // if user does NOT exist
     var temp = new User(username, password, library, tags);
     NoteTracker.currentUser = temp;
     var x = userLibrary.length - 1;
