@@ -38,8 +38,24 @@ function Note (noteTitle, noteContent) {
 
 //populates the new user form via innerHTML
 function newUserForm (event) {
-  document.getElementById('loginForm').innerHTML = '';
-  document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
+
+  var context = {
+      userStatusNoSpace : "newUser",
+      userStatus : "New User",
+      innerButtonValue : "Create New User",
+      outerButtonValue : "Switch to Login Page",
+      outerButtonId : "existingButton",
+      msg : ""
+    }
+
+  var source   = $("#loginForm").html();
+  var template = Handlebars.compile(source);
+  var html    = template(context);
+
+
+
+  // document.getElementById('loginForm').innerHTML = '';
+  // document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
 
   // event listener looking for click on newUser button
   var newUserEl = document.getElementById('newUser');
@@ -50,8 +66,23 @@ function newUserForm (event) {
   existingButton.addEventListener('click', function(e) {returnUserForm(e);},false);
 }
 function returnUserForm (event) {
-  document.getElementById('loginForm').innerHTML = '';
-  document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
+
+  var context = {
+    userStatusNoSpace : "returnUser",
+    userStatus : "Return User",
+    innerButtonValue : "Switch to Login Page",
+    outerButtonValue : "Switch to Login Page",
+    outerButtonId : "newButton",
+    msg : ""
+  }
+
+  var source   = $("#loginForm").html();
+  var template = Handlebars.compile(source);
+  var html    = template(context);
+
+  // document.getElementById('loginForm').innerHTML = '';
+  // document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
+
   var returnUserEl = document.getElementById('returnUser');
   returnUserEl.addEventListener('submit', function(e) {returnUser(e);},false);
   var newButton = document.getElementById('newButton');
