@@ -6,6 +6,26 @@
     <link rel="stylesheet" type="text/css" href="css/skeleton.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script id="portfolioTemplate" type="text/x-handlebars-template">
+
+          userStatus = newUser / returnUser
+
+
+          <form name="loginform" class="whiteText" id="{{userStatus}}">
+            <fieldset>
+              <legend>{{}}</legend>
+              <label>Username</label>
+              <input class="labelColor" type="text" name="usr" placeholder="username" required="required">
+
+              <label>Password</label>
+              <input class="labelColor" type="password" name="pword" placeholder="password" required="required">
+              <p id="msg"></p>
+              <input class="button-primary" type="submit" value="Create New User">
+            </fieldset>
+          </form>
+          <input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">
+
+    </script>
   </head>
   <body>
       <header>
