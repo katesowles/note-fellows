@@ -17,7 +17,22 @@
     </script>
 
     <script id="createOrEditNote" type="text/x-handlebars-template">
-      <form id="textInput" class="borders"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" maxlength="66">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteTag">Add a New Tag</label><textarea name="noteTag"></textarea>' + '<label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect()
+      <form id="textInput" class="borders">
+        <fieldset>
+          <legend>Edit Note</legend>
+          <label for="noteTitle">Title</label>
+          <textarea id="titleTextArea" name="noteTitle" maxlength="66">
+            {{noteTitle}}
+          </textarea>
+          <label for="noteTag">Add a New Tag</label>
+          <textarea name="noteTag"></textarea>
+          <label for="noteContent">Content</label>
+          <textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;">
+            {{noteContent}}
+          </textarea>
+          <input class="button-primary" type="submit" value="Update Note">
+        </fieldset>
+      </form>' + this.tagsMultipleSelect()
     </script>
   </head>
 
