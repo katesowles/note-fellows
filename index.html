@@ -8,22 +8,24 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script id="portfolioTemplate" type="text/x-handlebars-template">
 
-          userStatus = newUser / returnUser
+          <!-- userStatusNoSpace = newUser / returnUser
+          userStatus = New User / Return User
+          buttonValue = Switch to Login Page / Create New User
+          buttonId = existingButton / newButton -->
 
-
-          <form name="loginform" class="whiteText" id="{{userStatus}}">
+          <form name="loginform" class="whiteText" id="{{userStatusNoSpace}}">
             <fieldset>
-              <legend>{{}}</legend>
+              <legend>{{userStatus}}</legend>
               <label>Username</label>
               <input class="labelColor" type="text" name="usr" placeholder="username" required="required">
 
               <label>Password</label>
               <input class="labelColor" type="password" name="pword" placeholder="password" required="required">
-              <p id="msg"></p>
-              <input class="button-primary" type="submit" value="Create New User">
+              <p id="msg">{{message}}</p>
+              <input class="button-primary" type="submit" value="{{buttonValue}}">
             </fieldset>
           </form>
-          <input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">
+          <input class="button-primary" type="submit" value="{{buttonValue}}" id="{{buttonId}}">
 
     </script>
   </head>
