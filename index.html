@@ -8,10 +8,24 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script id="portfolioTemplate" type="text/x-handlebars-template">
 
-          <!-- userStatusNoSpace = newUser / returnUser
-          userStatus = New User / Return User
-          buttonValue = Switch to Login Page / Create New User
-          buttonId = existingButton / newButton -->
+          <script type="application/json" id="loginFormStates">
+            {
+              "New" : {
+                "userStatusNoSpace" : "newUser",
+                "userStatus" : "New User",
+                "buttonValue" : "Switch to Login Page",
+                "buttonId" : "existingButton",
+                "msg" : ""
+              },
+              "Existing" : {
+                "userStatusNoSpace" : "returnUser",
+                "userStatus" : "Return User",
+                "buttonValue" : "Create New User",
+                "buttonId" : "newButton",
+                "msg" : ""
+              }
+            }
+          </script>
 
           <form name="loginform" class="whiteText" id="{{userStatusNoSpace}}">
             <fieldset>
@@ -22,10 +36,10 @@
               <label>Password</label>
               <input class="labelColor" type="password" name="pword" placeholder="password" required="required">
               <p id="msg">{{message}}</p>
-              <input class="button-primary" type="submit" value="{{buttonValue}}">
+              <input class="button-primary" type="submit" value="{{innerButtonValue}}">
             </fieldset>
           </form>
-          <input class="button-primary" type="submit" value="{{buttonValue}}" id="{{buttonId}}">
+          <input class="button-primary" type="submit" value="{{outterButtonValue}}" id="{{buttonId}}">
 
     </script>
   </head>
