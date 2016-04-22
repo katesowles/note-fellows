@@ -193,7 +193,7 @@ var NoteTracker = {
   clearNoteBrowser: function () {
     document.getElementById('noteList').innerHTML = '';
   },
-  clearForm: function () { ////////////////////////////////REPLACE LINE 197*******************
+  clearForm: function () {
     $('#displayWindow').empty();
   },
   clearNoteWrapper: function (){
@@ -251,7 +251,21 @@ var NoteTracker = {
   },
   createForm: function() {
     this.clearForm();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" required="required" maxlength="66"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag"/><label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
+
+    //create dummy note with empty title and content to pass into #createOrEditNote template
+    var blankNote = {
+      createOrEdit: 'Create New Note',
+      noteTitle: '',
+      noteContent: '',
+      submitValue: 'Create a New Note'
+    };
+
+    //append populated #createOrEditNote template to #displayWindow div
+    var createOrEditTemplate = $('#createOrEditNote').html();
+    var templateFunction = Handlebars.compile(createOrEditTemplate);
+    var htmlToAppend = templateFunction(blankNote);
+    $('#displayWindow').append(htmlToAppend);
+
     newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
     NoteTracker.createForm();},false);
@@ -273,15 +287,25 @@ var NoteTracker = {
   editNote: function(e) {
     e.preventDefault();
     var noteID = tempNoteId;
-    this.clearNoteWrapper();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" maxlength="66">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteTag">Add a New Tag</label><textarea name="noteTag"></textarea>' + '<label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect();
+
+    this.clearForm();
+    var noteToEdit = userLibrary[this.currentIndex].library[noteID];
+    noteToEdit.createOrEdit = 'Edit Note';
+    noteToEdit.submitValue = 'Update Note';
+
+    //append populated #createOrEditNote template to #displayWindow div
+    var createOrEditTemplate = $('#createOrEditNote').html();
+    var templateFunction = Handlebars.compile(createOrEditTemplate);
+    var htmlToAppend = templateFunction(noteToEdit);
+    $('#displayWindow').append(htmlToAppend);
+
     var newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.updateForm(e);},false);
   },
   displayNote: function(noteID) {
     //empty #displayWindow div
     this.clearForm();
-    var noteToDisplay = userLibrary[0].library[noteID];
+    var noteToDisplay = userLibrary[this.currentIndex].library[noteID];
 
     //append populated #noteDisplay template to #displayWindow div
     var noteDisplayTemplate = $('#noteDisplay').html();
