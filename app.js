@@ -193,8 +193,8 @@ var NoteTracker = {
   clearNoteBrowser: function () {
     document.getElementById('noteList').innerHTML = '';
   },
-  clearForm: function () {
-    document.getElementById('displayWindow').innerHTML = '';
+  clearForm: function () { ////////////////////////////////REPLACE LINE 197*******************
+    $('#displayWindow').empty();
   },
   clearNoteWrapper: function (){
     document.getElementById('noteWrapper').innerHTML = '';
@@ -279,9 +279,16 @@ var NoteTracker = {
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.updateForm(e);},false);
   },
   displayNote: function(noteID) {
+    //empty #displayWindow div
     this.clearForm();
-    tempNoteId = noteID;
-    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper" class="borders"><h4 class="labelColor">'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p class="labelColor">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary navspacing" type="submit" value="Edit note" id="editbutton"><input class="button-primary navspacing" type="submit" value="Delete" id="deleteButton"><input class="button-primary navspacing" type="submit" value="New note" id="newNoteButton"></div>';
+    var noteToDisplay = userLibrary[0].library[noteID];
+
+    //append populated #noteDisplay template to #displayWindow div
+    var noteDisplayTemplate = $('#noteDisplay').html();
+    var templateFunction = Handlebars.compile(noteDisplayTemplate);
+    var htmlToAppend = templateFunction(noteToDisplay);
+    $('#displayWindow').append(htmlToAppend);
+
     var editButton = document.getElementById('editbutton');
     editButton.addEventListener('click', function(e){NoteTracker.editNote(e);}, false);
     var deleteButton = document.getElementById('deleteButton');
