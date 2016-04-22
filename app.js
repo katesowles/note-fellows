@@ -193,7 +193,7 @@ var NoteTracker = {
   clearNoteBrowser: function () {
     document.getElementById('noteList').innerHTML = '';
   },
-  clearForm: function () { ////////////////////////////////REPLACE LINE 197*******************
+  clearForm: function () {
     $('#displayWindow').empty();
   },
   clearNoteWrapper: function (){
