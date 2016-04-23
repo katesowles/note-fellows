@@ -6,45 +6,27 @@
     <link rel="stylesheet" type="text/css" href="css/skeleton.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script id="portfolioTemplate" type="text/x-handlebars-template">
+    <script id="loginTemplate" type="text/x-handlebars-template">
+      <form name="loginform" class="whiteText" id="{{formId}}">
+        <fieldset>
+          <legend>{{formLegend}}</legend>
 
-          <script type="application/json" id="loginFormStates">
-            {
-              "New" : {
-                "userStatusNoSpace" : "newUser",
-                "userStatus" : "New User",
-                "buttonValue" : "Switch to Login Page",
-                "buttonId" : "existingButton",
-                "msg" : ""
-              },
-              "Existing" : {
-                "userStatusNoSpace" : "returnUser",
-                "userStatus" : "Return User",
-                "buttonValue" : "Create New User",
-                "buttonId" : "newButton",
-                "msg" : ""
-              }
-            }
-          </script>
+          <label>Username</label>
+          <input class="labelColor" type="text" name="usr" placeholder="username" required="required">
 
-          <form name="loginform" class="whiteText" id="{{userStatusNoSpace}}">
-            <fieldset>
-              <legend>{{userStatus}}</legend>
-              <label>Username</label>
-              <input class="labelColor" type="text" name="usr" placeholder="username" required="required">
+          <label>Password</label>
+          <input class="labelColor" type="password" name="pword" placeholder="password" required="required">
 
-              <label>Password</label>
-              <input class="labelColor" type="password" name="pword" placeholder="password" required="required">
-              <p id="msg">{{message}}</p>
-              <input class="button-primary" type="submit" value="{{innerButtonValue}}">
-            </fieldset>
-          </form>
-          <input class="button-primary" type="submit" value="{{outterButtonValue}}" id="{{buttonId}}">
+          <p id="msg">{{message}}</p>
 
+          <input class="button-primary" type="submit" value="{{innerButtonValue}}">
+        </fieldset>
+      </form>
+      <input class="button-primary" type="submit" value="{{outerButtonValue}}" id="{{outerButtonId}}">
     </script>
   </head>
   <body>
-      <header>
+    <header>
       <img src="images/notefellows.png" id="logo">
       <h1 class="leftspacing">Welcome To Note Fellows</h1>
       <nav>
@@ -52,15 +34,20 @@
         <a class="button button-primary" href="about.html">About</a>
       </nav>
     </header>
+
     <div class="content">
-    <div class="leftspacing" id="loginForm"></div>
+      <div class="leftspacing" id="loginForm">
+        <!-- login / create account forms will go here -->
+      </div>
     </div>
+
     <footer>
       &copy; 2015 Note Fellows
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="loginForms.js" type="text/javascript"></script>
     <script src="app.js" type="text/javascript"></script>
   </body>
 </html>

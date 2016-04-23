@@ -1,23 +1,27 @@
 var userLibrary = [];
-var tempNoteId;
-// this control flow allows us to avoid errors when switching between html pages
+var tempNoteId; // this control flow allows us to avoid errors when switching between html pages
 
-// if a user visits the site on index.html and userIndex and userLibrary both exist in local storage, parse the info and save it to the UserLibrary variable
-if (document.title === 'Welcome to Note Fellows!') { //index.html
+if (document.title === 'Welcome to Note Fellows!') { // index.html
   if (localStorage.userIndex && localStorage.userLibrary) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
+    $('#loginForm').append(returnUserForm('loginTemplate', 'returningUserContext'));
+    // $('#loginForm').append(login.returnUserForm('loginTemplate', 'returningUserContext'));
+    // if userIndex and userLibrary exist in localStorage, show returningUserForm
   }
-  newUserForm(); // why accessing NEW user form if there's already data? shouldn't it be RETURNING user?
+  else {
+    // $('#loginForm').append(newUserForm('loginTemplate', 'newUserContext'));
+    $('#loginForm').append(newUserForm());
+    // $('#loginForm').append(login.newUserForm('loginTemplate', 'newUserContext'));
+    // if userIndex and userLibrary DO NOT exist in localStorage, show newUserForm
+  }
 }
-
-// if user visits site on notes.html and userIndex exists, parse it and userLibrary and listen for click on 'noteList' element and run getNote when clicked.
 else if (document.title === 'Note Fellows') { // notes.html
   if (localStorage.userIndex) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
   }
-  var el = document.getElementById('noteList');
+  var el = $('#noteList');
   el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
 }
 /***************OBJECT CONSTRUCTORS***************/
@@ -36,70 +40,26 @@ function Note (noteTitle, noteContent) {
 }
 /******************GLOBAL FUNCTIONS***************/
 
-//populates the new user form via innerHTML
 function newUserForm (event) {
-  document.getElementById('loginForm').innerHTML = '';
+
   document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
 
-  // event listener looking for click on newUser button
   var newUserEl = document.getElementById('newUser');
-  newUserEl.addEventListener('submit', function(e) {newUser(e);},false);
-
-  // or existing user button; use better naming scheme!
+  newUserEl.addEventListener('submit', function(e) {login.newUser(e);},false);
   var existingButton = document.getElementById('existingButton');
   existingButton.addEventListener('click', function(e) {returnUserForm(e);},false);
 }
+
 function returnUserForm (event) {
-  document.getElementById('loginForm').innerHTML = '';
+
   document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
+
   var returnUserEl = document.getElementById('returnUser');
-  returnUserEl.addEventListener('submit', function(e) {returnUser(e);},false);
+  returnUserEl.addEventListener('submit', function(e) {login.returnUser(e);},false);
   var newButton = document.getElementById('newButton');
   newButton.addEventListener('click', function(e) {newUserForm(e);},false);
 }
-function newUser(event) {
-  event.preventDefault();
-  var username = event.target.usr.value;
-  var password = event.target.pword.value;
-  var msg = document.getElementById('msg');
-  var library = [];
-  var tags = [];
-  var userExists = false;
-  for (var i = 0; i < userLibrary.length; i++) { // checks to see if user exists in that computer's local storage
-    if (userLibrary[i].username === username) {
-      msg.textContent = 'Username taken';
-      userExists = true;
-    }
-  }
-  if (!userExists) { // if user does NOT exist
-    var temp = new User(username, password, library, tags);
-    NoteTracker.currentUser = temp;
-    var x = userLibrary.length - 1;
-    localStorage.setItem('userIndex', JSON.stringify(x));
-    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-    window.location = 'notes.html';
-  }
-}
-function returnUser(event) {
-  event.preventDefault();
-  var username = event.target.usr.value;
-  var password = event.target.pword.value;
-  var msg = document.getElementById('msg');
-  var userExists = false;
-  for (var i = 0; i < userLibrary.length; i++) {
-    if (userLibrary[i].username === username && userLibrary[i].password === password) {
-      NoteTracker.currentUser = userLibrary[i];
-      localStorage.setItem('userIndex', JSON.stringify(i));
-      localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-      window.location = 'notes.html';
-    }
-    if (userLibrary[i].username === username && userLibrary[i].password !== password) {
-      msg.textContent = 'Incorrect Password';
-      userExists = true;
-    }
-  }
-  if (!userExists) {msg.textContent = 'User Does Not Exist';}
-}
+
 /***************OBJECT LITERAL******************/
 var NoteTracker = {
 
