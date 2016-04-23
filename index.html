@@ -6,10 +6,11 @@
     <link rel="stylesheet" type="text/css" href="css/skeleton.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script id="portfolioTemplate" type="text/x-handlebars-template">
-      <form name="loginform" class="whiteText" id="{{userStatusNoSpace}}">
+
+    <script id="loginTemplate" type="text/x-handlebars-template">
+      <form name="loginform" class="whiteText" id="{{formId}}">
         <fieldset>
-          <legend>{{userStatus}}</legend>
+          <legend>{{formLegend}}</legend>
 
           <label>Username</label>
           <input class="labelColor" type="text" name="usr" placeholder="username" required="required">
@@ -24,6 +25,7 @@
       </form>
       <input class="button-primary" type="submit" value="{{outerButtonValue}}" id="{{outerButtonId}}">
     </script>
+
   </head>
   <body>
     <header>
@@ -47,6 +49,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="loginForms.js" type="text/javascript"></script>
     <script src="app.js" type="text/javascript"></script>
   </body>
 </html>
